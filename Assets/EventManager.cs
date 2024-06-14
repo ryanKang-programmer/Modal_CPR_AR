@@ -118,7 +118,8 @@ public class EventManager : MonoBehaviour
         if (GameObject.FindWithTag("algoImg") != null) {
            AlgoImg = GameObject.FindWithTag("algoImg").GetComponent<RawImage>();
         }
-
+        //Connect to the server for real-time communication.
+        //We don't need this connection in the future.
         var uri = new Uri("http://136.159.140.66");
 
         socket = new SocketIOUnity(uri);
@@ -129,7 +130,17 @@ public class EventManager : MonoBehaviour
         {
             Debug.Log("socket.OnConnected");
         };
-
+        //Ready to listen whenever receiving data from the server
+        /*
+        TO-DO we will chagne this part.
+        Now we are receiving data from server,
+        We will invoke event from the local script
+        ex) 
+            setTimeout(()=> evoke_event(idx), 5000)
+            setTimeout(()=> evoke_event(1), 5000)
+            setTimeout(()=> evoke_event(3), 5000)
+            setTimeout(()=> evoke_event(5), 5000)
+        */
         socket.On("currentStatus", (response) => {
             Debug.Log("currentStatus");
             Debug.Log(response);
@@ -149,13 +160,35 @@ public class EventManager : MonoBehaviour
 
             time1 = (startTimestamp - unixTime * 1000) / 1000 + 120;
             time2 = (startTimestamp - unixTime * 1000) / 1000 + 300;
+
+            //UI update
+            //Due to this is not the main process(?), we need to update UI like the below
             m_queueAction.Enqueue(() => UpdateUI(idx));
+            /*
+                TO-DO We need to add some Visual, Audio, and Haptic notification here
+                Add_Notifications();
+            */
+
         });
 
         Debug.Log("Connecting...");
         socket.Connect();
     }
 
+    void Add_Notifications()
+    {
+        /* 
+        TO-DO
+        Use switch or if statements
+        case 1: Visual (Arrow to spatial point(x2, y2, z2) from users current spatial point(x1, y1, z1))
+        Start with making ball at the point(x2, y2, z2) and point(x1, y1, z1)
+        case 2: Audio (spatial audio)
+        Please take a look at https://learn.microsoft.com/en-us/training/modules/spatial-audio-tutorials-mrtk/
+        case 3: Haptic (based on the spatial audio)
+        */
+    }
+
+    //UI update
     void UpdateUI(int idx)
     {
         Debug.Log("UpdateUI");
