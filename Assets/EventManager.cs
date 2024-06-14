@@ -165,7 +165,7 @@ public class EventManager : MonoBehaviour
             //Due to this is not the main process(?), we need to update UI like the below
             m_queueAction.Enqueue(() => UpdateUI(idx));
             /*
-                TO-DO We need to add some Visual, Audio, and Haptic notification here
+                TO-DO We need to add some Visual, Audio, and Haptic notification here by calling the below function.
                 Add_Notifications();
             */
 
@@ -181,10 +181,20 @@ public class EventManager : MonoBehaviour
         TO-DO
         Use switch or if statements
         case 1: Visual (Arrow to spatial point(x2, y2, z2) from users current spatial point(x1, y1, z1))
-        Start with making ball at the point(x2, y2, z2) and point(x1, y1, z1)
+            Start with making ball at the point(x2, y2, z2) and point(x1, y1, z1)
+            making ball id done by UI, or Script
+            1)In case of UI
+                making balls in advanced by using UI.
+                we can simply turn off the object that we do not need at specific time,
+                and turn on the object that we need at that time.
+            2)In case of Script
+                we can add what we need, and remove what we do not need at specific time.
+        === 
         case 2: Audio (spatial audio)
-        Please take a look at https://learn.microsoft.com/en-us/training/modules/spatial-audio-tutorials-mrtk/
+            Please take a look at https://learn.microsoft.com/en-us/training/modules/spatial-audio-tutorials-mrtk/
+        ===
         case 3: Haptic (based on the spatial audio)
+            **Need to find is it possible to use without sound even using spatial audio?
         */
     }
 
